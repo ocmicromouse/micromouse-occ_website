@@ -7,9 +7,8 @@ This is a static, easily editable website for Orange Coast College's MicroMouse 
 Most site copy lives in `content.js`.
 
 - Update meeting time, room, contact links, and policy details in the `club` object.
-- Update curriculum cards in the `modules` array.
-- Update the academic-year pacing in the `schedule` array.
-- Update events, logistics, and join instructions in their matching arrays.
+- Update intro and join text in the `intro` and `join` arrays.
+- Add new sections later when the club is ready to publish its own material.
 
 ## Preview locally
 
@@ -21,8 +20,7 @@ python3 -m http.server 8080
 
 Then visit `http://localhost:8080`.
 
-## Source inspiration
+## Current scope
 
-The technical curriculum was adapted and rewritten for OCC students from the public IEEE at UCLA MicroMouse project documentation:
-
-https://projects.ieeebruins.com/micromouse/
+This site currently keeps only the landing page, club information, and sign-up content.
+Curriculum-style material has been removed so OCC can publish its own information later.

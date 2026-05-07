@@ -20,27 +20,24 @@
         </span>
       </a>
       <nav class="topnav" aria-label="Primary navigation">
-        <a href="#program">Program</a>
-        <a href="#modules">Modules</a>
-        <a href="#schedule">Schedule</a>
+        <a href="#club">Club Info</a>
         <a href="#join">Join</a>
       </nav>
-      <button class="menu-button" type="button" aria-label="Toggle section navigation">Menu</button>
     </header>
 
     <main>
       <section class="hero" id="overview">
         <div class="hero-copy">
-          <p class="eyebrow">New club, real robot, full build path</p>
+          <p class="eyebrow">New club, real robot, learn by doing</p>
           <h1>Build an autonomous maze-solving robot at Orange Coast College.</h1>
           <p>
-            MicroMouse @ OCC helps students design, solder, program, test, and race small robots that
-            find their way through a 16 by 16 maze. Start with a guided training bot, then design your
-            own competition mouse from scratch.
+            MicroMouse @ OCC is a student robotics club for building small autonomous robots that
+            can explore and solve mazes. The club is still new, and members will help shape what we
+            build, document, and share.
           </p>
           <div class="hero-actions">
-            <a class="button primary" href="#modules">Explore the curriculum</a>
-            <a class="button secondary" href="#join">Club info</a>
+            <a class="button primary" href="#join">Join the club</a>
+            <a class="button secondary" href="#club">Club info</a>
           </div>
         </div>
         <div class="hero-visual" aria-label="Animated micromouse maze">
@@ -51,66 +48,23 @@
         </div>
       </section>
 
-      <section class="stats" aria-label="Program highlights">
-        <article>
-          <strong>2 phases</strong>
-          <span>guided training bot, then custom mouse</span>
-        </article>
-        <article>
-          <strong>10 modules</strong>
-          <span>power, motors, sensors, STM32, PID, floodfill, and competition</span>
-        </article>
-        <article>
-          <strong>16 x 16</strong>
-          <span>standard maze target for advanced runs</span>
-        </article>
-      </section>
-
       <div class="docs-shell">
-        <aside class="sidebar" aria-label="Section navigation">
-          <label class="search-label" for="searchInput">Search modules</label>
-          <input id="searchInput" type="search" placeholder="Try PID, battery, floodfill...">
-          <nav id="sectionNav"></nav>
-        </aside>
-
         <div class="content">
-          <section class="section" id="program">
-            <p class="eyebrow">Program</p>
-            <h2>What OCC students will build</h2>
-            <div id="programContent" class="flow"></div>
+          <section class="section" id="club">
+            <p class="eyebrow">Club Info</p>
+            <h2>MicroMouse at Orange Coast College</h2>
+            <div id="clubContent" class="club-panel"></div>
           </section>
 
-          <section class="section" id="modules">
-            <p class="eyebrow">Curriculum</p>
-            <h2>MicroMouse learning modules</h2>
-            <p class="section-lede">
-              These modules keep the IEEE Bruins MicroMouse technical path, rewritten for OCC students
-              and organized so you can edit the details in one place.
-            </p>
-            <div id="moduleGrid" class="module-grid"></div>
-          </section>
-
-          <section class="section" id="schedule">
-            <p class="eyebrow">Pacing</p>
-            <h2>Suggested academic-year schedule</h2>
-            <div id="scheduleContent" class="timeline"></div>
-          </section>
-
-          <section class="section" id="events">
-            <p class="eyebrow">Events</p>
-            <h2>Showcases and competitions</h2>
-            <div id="eventsContent" class="split-list"></div>
-          </section>
-
-          <section class="section" id="logistics">
-            <p class="eyebrow">Club ops</p>
-            <h2>How to keep teams moving</h2>
-            <div id="logisticsContent" class="split-list"></div>
+          <section class="section" id="intro">
+            <p class="eyebrow">Intro</p>
+            <h2>Start here</h2>
+            <div id="introContent" class="flow"></div>
           </section>
 
           <section class="section join" id="join">
-            <p class="eyebrow">Join or edit</p>
-            <h2>Make this site yours</h2>
+            <p class="eyebrow">Join</p>
+            <h2>Get involved with MicroMouse @ OCC</h2>
             <div id="joinContent" class="flow"></div>
           </section>
         </div>
@@ -119,7 +73,7 @@
 
     <footer class="footer">
       <span>MicroMouse @ OCC</span>
-      <span>Adapted from the public IEEE at UCLA MicroMouse project documentation for Orange Coast College students.</span>
+      <span>Orange Coast College student robotics club.</span>
     </footer>
 
     <script src="./content.js"></script>

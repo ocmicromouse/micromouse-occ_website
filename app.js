@@ -1,14 +1,5 @@
 const content = window.siteContent;
 
-const navItems = [
-  ["Program", "program"],
-  ["Modules", "modules"],
-  ["Schedule", "schedule"],
-  ["Events", "events"],
-  ["Logistics", "logistics"],
-  ["Join", "join"]
-];
-
 function el(tag, className, text) {
   const node = document.createElement(tag);
   if (className) node.className = className;
@@ -36,125 +27,86 @@ function renderFlow(targetId, blocks) {
   });
 }
 
-function renderNavigation() {
-  const nav = document.getElementById("sectionNav");
-  navItems.forEach(([label, id]) => {
-    const link = el("a", "", label);
-    link.href = `#${id}`;
-    nav.appendChild(link);
-  });
+function renderClubInfo() {
+  const club = content.club;
+  const target = document.getElementById("clubContent");
 
-  const moduleTitle = el("span", "nav-heading", "Modules");
-  nav.appendChild(moduleTitle);
-  content.modules.forEach((module) => {
-    const link = el("a", "module-nav-link", module.title);
-    link.href = `#module-${module.id}`;
-    nav.appendChild(link);
-  });
-}
+  const main = el("div", "club-main");
+  const side = el("div", "club-side");
 
-function renderModules(modules = content.modules) {
-  const grid = document.getElementById("moduleGrid");
-  grid.innerHTML = "";
+  const intro = el("article", "club-intro");
+  intro.appendChild(el("h3", "", "Join the OCC MicroMouse build team"));
+  intro.appendChild(
+    el(
+      "p",
+      "",
+      "We meet every week to work on the club, build robots, answer questions, and help students find a place to contribute."
+    )
+  );
 
-  modules.forEach((module) => {
-    const card = el("article", "module-card");
-    card.id = `module-${module.id}`;
-    card.dataset.search = `${module.title} ${module.tag} ${module.summary} ${module.sections
-      .map((section) => `${section.heading} ${section.bullets.join(" ")}`)
-      .join(" ")}`.toLowerCase();
+  const expectations = el("article", "club-expectations");
+  expectations.appendChild(el("h3", "", "What to expect"));
+  const list = el("ul", "check-list");
+  [
+    "A student-led environment where the club is still being shaped.",
+    "Hands-on work sessions for robotics, electronics, coding, design, testing, and documentation.",
+    "Room for beginners and experienced builders.",
+    "Opportunities to help shape what MicroMouse at OCC becomes next."
+  ].forEach((item) => list.appendChild(el("li", "", item)));
+  expectations.appendChild(list);
 
-    const meta = el("div", "module-meta");
-    meta.appendChild(el("span", "tag", module.tag));
-    meta.appendChild(el("span", "", module.title));
-
-    card.appendChild(meta);
-    card.appendChild(el("h3", "", module.title));
-    card.appendChild(el("p", "module-summary", module.summary));
-
-    module.sections.forEach((section, index) => {
-      const details = el("details", "module-details");
-      if (index === 0) details.open = true;
-      const summary = el("summary", "", section.heading);
-      details.appendChild(summary);
-
-      const list = el("ul", "bullet-list");
-      section.bullets.forEach((item) => list.appendChild(el("li", "", item)));
-      details.appendChild(list);
-      card.appendChild(details);
-    });
-
-    if (module.links) {
-      const links = el("div", "resource-links");
-      module.links.forEach(([label, href]) => {
-        const link = el("a", "", label);
-        link.href = href;
-        link.target = "_blank";
-        link.rel = "noopener";
-        links.appendChild(link);
-      });
-      card.appendChild(links);
+  const details = el("div", "club-details");
+  [
+    ["Meeting", club.meeting],
+    ["Email", club.email],
+    ["Instagram", club.instagram]
+  ].forEach(([label, value]) => {
+    const item = el("article", "club-detail-row");
+    item.appendChild(el("span", "club-detail-label", label));
+    if (label === "Email") {
+      const link = el("a", "club-detail-link", value);
+      link.href = `mailto:${value}`;
+      item.appendChild(link);
+    } else if (label === "Instagram") {
+      const link = el("a", "club-detail-link", value);
+      link.href = club.instagramUrl;
+      link.target = "_blank";
+      link.rel = "noopener";
+      item.appendChild(link);
+    } else {
+      item.appendChild(el("strong", "", value));
     }
-
-    grid.appendChild(card);
+    details.appendChild(item);
   });
 
-  if (!modules.length) {
-    grid.appendChild(el("p", "empty-state", "No modules match that search."));
-  }
-}
+  const discord = el("article", "discord-card");
+  discord.appendChild(el("span", "", "Discord"));
+  discord.appendChild(el("h3", "", "Scan to join the server"));
+  const qrLink = el("a", "qr-link");
+  qrLink.href = club.discordInviteUrl;
+  qrLink.target = "_blank";
+  qrLink.rel = "noopener";
+  const qr = document.createElement("img");
+  qr.src = `https://api.qrserver.com/v1/create-qr-code/?size=280x280&margin=14&data=${encodeURIComponent(
+    club.discordInviteUrl
+  )}`;
+  qr.alt = "QR code for joining the MicroMouse at OCC Discord server";
+  qr.loading = "lazy";
+  qrLink.appendChild(qr);
+  discord.appendChild(qrLink);
+  const discordUrl = el("a", "discord-url", club.discordInviteUrl.replace(/^https?:\/\//, ""));
+  discordUrl.href = club.discordInviteUrl;
+  discordUrl.target = "_blank";
+  discordUrl.rel = "noopener";
+  discord.appendChild(discordUrl);
 
-function renderSchedule() {
-  const target = document.getElementById("scheduleContent");
-  content.schedule.forEach((term) => {
-    const article = el("article", "timeline-term");
-    article.appendChild(el("h3", "", term.term));
+  main.appendChild(intro);
+  main.appendChild(expectations);
+  side.appendChild(discord);
+  side.appendChild(details);
 
-    term.weeks.forEach(([week, detail]) => {
-      const row = el("div", "timeline-row");
-      row.appendChild(el("strong", "", week));
-      row.appendChild(el("p", "", detail));
-      article.appendChild(row);
-    });
-
-    target.appendChild(article);
-  });
-}
-
-function renderSplitList(targetId, items) {
-  const target = document.getElementById(targetId);
-  items.forEach((item) => {
-    const article = el("article", "mini-card");
-    article.appendChild(el("h3", "", item.title));
-    article.appendChild(el("p", "", item.body));
-    target.appendChild(article);
-  });
-}
-
-function setupSearch() {
-  const input = document.getElementById("searchInput");
-  input.addEventListener("input", () => {
-    const query = input.value.trim().toLowerCase();
-    const filtered = content.modules.filter((module) => {
-      const text = `${module.title} ${module.tag} ${module.summary} ${module.sections
-        .map((section) => `${section.heading} ${section.bullets.join(" ")}`)
-        .join(" ")}`.toLowerCase();
-      return text.includes(query);
-    });
-    renderModules(filtered);
-  });
-}
-
-function setupMobileMenu() {
-  const button = document.querySelector(".menu-button");
-  const sidebar = document.querySelector(".sidebar");
-  button.addEventListener("click", () => {
-    sidebar.classList.toggle("open");
-  });
-
-  sidebar.addEventListener("click", (event) => {
-    if (event.target.tagName === "A") sidebar.classList.remove("open");
-  });
+  target.appendChild(main);
+  target.appendChild(side);
 }
 
 function drawMaze() {
@@ -240,13 +192,7 @@ function drawMaze() {
   frame();
 }
 
-renderNavigation();
-renderFlow("programContent", content.program);
-renderModules();
-renderSchedule();
-renderSplitList("eventsContent", content.events);
-renderSplitList("logisticsContent", content.logistics);
+renderClubInfo();
+renderFlow("introContent", content.intro);
 renderFlow("joinContent", content.join);
-setupSearch();
-setupMobileMenu();
 drawMaze();
